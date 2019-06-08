@@ -5,8 +5,10 @@ Created on Wed May 29 19:15:47 2019
 @author: Aashish Mehtoliya
 """
 
+#added comment
+
 import os
-import pickle 
+import pickle
 import numpy as np
 from collections import Counter
 from sklearn.naive_bayes import MultinomialNB
@@ -24,27 +26,27 @@ def make_dictionary(root_dir):
     dictionary = Counter(all_words)
     #print(dictionary)
     list_to_remove = dictionary.keys()
-    
+
     for item in list(list_to_remove):
         if item.isalpha() == False:
             del dictionary[item]
-            
+
         elif len(item) == 1:
             del dictionary[item]
-    
+
     dictionary = dictionary.most_common(3000)
 #    for i,d in enumerate(dictionary):
 #        print(i)
-    
+
     return dictionary
-        
+
 def extract_feature(mail_dir):
     files = [os.path.join(mail_dir,f) for f in os.listdir(mail_dir)]
     feature_matrix = np.zeros((len(files),3000))
     train_labels = np.zeros(len(files))
     count = 0;
     docID = 0;
-    
+
     for fil in files:
         #print(fil)
         with open(fil) as fi:
@@ -64,14 +66,14 @@ def extract_feature(mail_dir):
             filepathToken = fil.split('\\')
 #            print(filepathToken)
             lastToken = filepathToken[len(filepathToken)-1]
-            
+
             #print(len(filepathToken))
             if lastToken.startswith("spmsg"):
                 train_labels[docID] = 1
                 count = count+1
             docID = docID+1
             #print(feature_matrix)
-            
+
     return feature_matrix,train_labels
 
 train_dir = 'D:/python prog/train-mails'
@@ -97,6 +99,5 @@ predicted_labels = model.predict(test_feature_matrix)
 
 print(accuracy_score(test_labels,predicted_labels))
 
-                
-                                
-    
+
+
